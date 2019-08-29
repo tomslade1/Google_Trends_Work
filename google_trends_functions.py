@@ -1,7 +1,7 @@
 import datetime
 import random
 import pandas as pd
-import tqdm
+from tqdm import tqdm
 from dateutil.relativedelta import relativedelta
 
 
@@ -246,7 +246,7 @@ def iot_periods(period_length, iteration_length, num_days, pytrends, kw_list,
 
     # Iterates through each backfill date
 
-    for dt in tqdm.tqdm_notebook(date_list):
+    for dt in tqdm(date_list):
 
         start = datetime.datetime.strptime(dt, "%Y-%m-%d")
         end = start + datetime.timedelta(days=num_days)

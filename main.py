@@ -5,7 +5,7 @@
 from pytrends.request import TrendReq
 import pandas
 import datetime
-import tqdm
+from tqdm import tqdm
 import google_trends_functions as gtf
 
 keywords = ['tv series', 'tv show', 'film', 'movie']
@@ -53,7 +53,7 @@ Backfill_df = pandas.DataFrame()
 
 # Iterates through each backfill date
 
-for dt in tqdm.tqdm_notebook(date_list):
+for dt in tqdm(date_list):
 
     start = datetime.datetime.strptime(dt, "%Y-%m-%d")
 
@@ -66,9 +66,24 @@ for dt in tqdm.tqdm_notebook(date_list):
     # Call method of interest on our pytrends payload object
     df = pytrends.related_queries()
 
-    Backfill_df = gtf.refactor_data(kw_dic,kw_exclusions,t,start,df, Backfill_df)   
+    Backfill_df = gtf.refactor_data(kw_dic,
+                                    kw_exclusions,
+                                    t,
+                                    start,
+                                    df,
+                                    Backfill_df)
 
-Backfill_df.to_gbq(destination_table='TSL03.Google_Trends', project_id='skyuk-uk-nowtv-analytics-prod', chunksize=None, reauth=False, if_exists='replace', auth_local_webserver=False, table_schema=None, location=None, progress_bar=False, credentials=None, verbose=None, private_key=None)      
+Backfill_df.to_gbq(destination_table='TSL03.Google_Trends',
+                   project_id='skyuk-uk-nowtv-analytics-prod',
+                   chunksize=None, reauth=False,
+                   if_exists='replace',
+                   auth_local_webserver=False,
+                   table_schema=None,
+                   location=None,
+                   progress_bar=False,
+                   credentials=None,
+                   verbose=None,
+                   private_key=None)
 
 
 sky_project = "skyuk-uk-nowtv-analytics-prod"
